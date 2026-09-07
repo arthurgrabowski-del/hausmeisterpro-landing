@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HausmeisterPro – Sauberkeit mit Foto-Nachweis, in jeder Sprache</title>
+<meta name="description" content="Die App für Hausmeister-Teams und Hausverwaltungen: Aufgaben & Turnusse planen, Erledigungen mit Foto belegen, Sprachbarrieren automatisch überwinden. Made in Germany.">
+<meta property="og:title" content="HausmeisterPro – Sauberkeit mit Foto-Nachweis, in jeder Sprache">
+<meta property="og:description" content="Aufgaben planen, mit Foto belegen, in jeder Sprache arbeiten. Die Software für Gebäudebetreuung – App, Back Office & Service-Portal.">
+<meta property="og:image" content="/assets/og-cover.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/logo-icon.svg">
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap">
+<style>
+:root{
+  --blue:#2563eb; --blue-deep:#1d4ed8; --blue-soft:#3b82f6;
+  --ink:#101223; --ink-2:#3d4258; --ink-3:#6b7186;
+  --line:#e4e9f2; --line-soft:#edf1f8;
+  --bg:#f7f9fd; --card:#ffffff;
+  --tint:#eaf1fd; --tint-2:#f2f6fd;
+  --green:#16a34a; --green-soft:#e8f7ee;
+  --amber:#d97706; --amber-soft:#fdf3e2;
+  --navy:#0d1330;
+  --r-lg:20px; --r-md:14px; --r-pill:999px;
+  --shadow-sm:0 1px 2px rgba(16,18,35,.05),0 2px 8px rgba(16,18,35,.04);
+  --shadow-md:0 2px 6px rgba(16,18,35,.05),0 12px 32px rgba(16,18,35,.08);
+  --shadow-lg:0 4px 12px rgba(16,18,35,.06),0 24px 64px rgba(16,18,35,.12);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3{letter-spacing:-.03em;line-height:1.12;font-weight:800}
+h2{font-size:clamp(30px,4.2vw,44px)}
+.sub{color:var(--ink-2);font-size:17px;max-width:58ch}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.eyebrow::before{content:"";width:20px;height:2px;background:var(--blue);border-radius:2px}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15.5px;border-radius:var(--r-pill);padding:13px 26px;transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s;cursor:pointer;border:0;white-space:nowrap}
+.btn:active{transform:translateY(1px) scale(.985)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 6px 18px rgba(37,99,235,.28)}
+.btn-primary:hover{background:var(--blue-deep);transform:translateY(-1px);box-shadow:0 10px 26px rgba(37,99,235,.34)}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{border-color:#cdd6e4;transform:translateY(-1px)}
+.btn-white{background:#fff;color:var(--blue-deep);box-shadow:0 8px 24px rgba(4,10,40,.35)}
+.btn-white:hover{transform:translateY(-1px)}
+.btn .arr{transition:transform .18s var(--ease)}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line-soft),0 8px 24px rgba(16,18,35,.05)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--blue)}
+.brand img{width:32px;height:30px}
+.nav-links{display:flex;gap:30px;font-size:14.5px;font-weight:500;color:var(--ink-2)}
+.nav-links a{transition:color .15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.nav-cta .btn{padding:10px 20px;font-size:14px}
+@media(max-width:880px){.nav-links{display:none}}
+@media(max-width:480px){
+  .brand{font-size:16px;gap:8px}
+  .brand img{width:26px;height:24px}
+  .nav-cta .btn{padding:9px 16px;font-size:13px}
+}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:150px 0 40px;background:linear-gradient(180deg,#eef3fb 0%,#f4f8fd 55%,#fff 100%);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 72px,rgba(226,235,249,.5) 72px 144px);mask-image:linear-gradient(180deg,#000 0%,transparent 88%);pointer-events:none}
+.hero::after{content:"";position:absolute;width:720px;height:720px;right:-200px;top:-220px;background:radial-gradient(closest-side,rgba(59,130,246,.16),transparent 70%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(38px,5.4vw,62px);color:var(--ink)}
+.hero h1 .hl{color:var(--blue)}
+.hero .sub{margin:22px 0 30px;font-size:18px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-note{margin-top:18px;font-size:13.5px;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.hero-note svg{flex:none}
+
+.hero-visual{position:relative;height:640px}
+.phone{background:#0c0e16;border-radius:52px;padding:11px;box-shadow:0 40px 90px rgba(13,19,48,.28),0 12px 28px rgba(13,19,48,.16), inset 0 0 0 2px #23283a;position:absolute}
+.phone img{border-radius:42px;width:100%}
+.phone-a{width:300px;left:6%;top:24px;z-index:2;animation:float 7s ease-in-out infinite}
+.phone-b{width:264px;right:2%;top:150px;transform:rotate(5deg);animation:float 8s 1.2s ease-in-out infinite}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.hero-chip{position:absolute;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-md);padding:12px 16px;display:flex;gap:10px;align-items:center;font-size:13.5px;font-weight:600;z-index:3}
+.hero-chip .dot{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none}
+.hero-chip small{display:block;font-weight:500;color:var(--ink-3);font-size:12px}
+.chip-1{left:-14px;bottom:120px;animation:float 6.5s .6s ease-in-out infinite}
+.chip-2{right:-6px;top:44px;animation:float 7.5s .3s ease-in-out infinite}
+@media(max-width:980px){
+  .hero{padding-top:120px}
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .hero-visual{height:520px;margin-top:8px}
+  .phone-a{left:0;width:250px}
+  .phone-b{right:0;width:224px;top:120px}
+  .chip-1{left:auto;right:8px;bottom:40px}
+  .chip-2{display:none}
+}
+
+/* ---------- Stat band ---------- */
+.stats{padding:44px 0 8px}
+.stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;border:1px solid var(--line);background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:26px 8px}
+.stat{text-align:center;padding:6px 12px}
+.stat b{display:block;font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.stat b span{color:var(--blue)}
+.stat small{color:var(--ink-3);font-size:13.5px;font-weight:500}
+.stat+ .stat{border-left:1px solid var(--line-soft)}
+@media(max-width:880px){.stats-in{grid-template-columns:1fr 1fr;gap:20px 0}.stat:nth-child(3){border-left:0}}
+
+/* ---------- Problem ---------- */
+.problem{padding:96px 0 20px}
+.problem-head{max-width:720px;margin-bottom:44px}
+.problem-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+.p-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;background:var(--bg);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.p-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.p-card h3{font-size:18.5px;margin:14px 0 8px;font-weight:700}
+.p-card p{font-size:14.5px;color:var(--ink-2)}
+.p-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center}
+.p-card.wide{background:linear-gradient(135deg,#0d1330,#1b2a5e);color:#fff;border:0}
+.p-card.wide h3{color:#fff}
+.p-card.wide p{color:#c9d4ee}
+@media(max-width:880px){.problem-grid{grid-template-columns:1fr}}
+
+/* ---------- Features ---------- */
+.features{padding:110px 0 30px}
+.f-head{max-width:760px;margin-bottom:64px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:36px 0}
+.f-row+.f-row{margin-top:26px}
+.f-copy h3{font-size:clamp(24px,3vw,32px);margin-bottom:14px}
+.f-copy p{color:var(--ink-2);font-size:16px;max-width:50ch}
+.f-list{margin-top:22px;display:grid;gap:12px}
+.f-list li{list-style:none;display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
+.f-list li b{color:var(--ink);font-weight:600}
+.f-check{flex:none;width:22px;height:22px;border-radius:7px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;margin-top:2px}
+.f-shot{position:relative;display:flex;justify-content:center}
+.f-stage{position:relative;width:100%;max-width:520px;border-radius:28px;padding:44px 0;display:flex;justify-content:center;overflow:hidden}
+.f-stage::before{content:"";position:absolute;inset:0;border-radius:28px}
+.stage-blue::before{background:linear-gradient(160deg,#e3edfd,#f0f6ff 60%,#e8f0fc)}
+.stage-green::before{background:linear-gradient(160deg,#e2f5ea,#f0faf4 60%,#e7f5ee)}
+.stage-amber::before{background:linear-gradient(160deg,#fdeeda,#fdf7ec 60%,#faf0e0)}
+.stage-slate::before{background:linear-gradient(160deg,#e8ecf5,#f4f6fb 60%,#e9edf6)}
+.f-stage .phone{position:relative;width:270px;box-shadow:0 30px 70px rgba(13,19,48,.25),inset 0 0 0 2px #23283a}
+.f-tag{position:absolute;z-index:2;background:#fff;border-radius:var(--r-md);border:1px solid var(--line);box-shadow:var(--shadow-md);padding:10px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.f-row.flip .f-copy{order:2}
+@media(max-width:940px){
+  .f-row{grid-template-columns:1fr;gap:28px}
+  .f-row.flip .f-copy{order:0}
+}
+
+/* ---------- Bento duo ---------- */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:60px}
+.b-tile{border-radius:var(--r-lg);border:1px solid var(--line);padding:34px 34px 0;overflow:hidden;position:relative;min-height:420px;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.b-tile:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.b-tile h3{font-size:21px;margin-bottom:8px}
+.b-tile p{font-size:14.5px;color:var(--ink-2);max-width:46ch}
+.b-tile .shot{margin:26px auto 0;max-width:330px;border-radius:18px 18px 0 0;box-shadow:0 -2px 40px rgba(13,19,48,.14);border:1px solid var(--line);border-bottom:0}
+.b-1{background:linear-gradient(180deg,#f3f7fe,#eaf1fd)}
+.b-2{background:linear-gradient(180deg,#f6f7fb,#edeff7)}
+@media(max-width:880px){.bento{grid-template-columns:1fr}}
+
+/* ---------- Back office (dark) ---------- */
+.backoffice{margin-top:110px;background:radial-gradient(1200px 500px at 70% -10%,#24408f 0%,transparent 60%),var(--navy);color:#fff;padding:110px 0;position:relative;overflow:hidden}
+.bo-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.backoffice h2{color:#fff}
+.backoffice .sub{color:#b9c4e2}
+.bo-list{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:14px 26px}
+.bo-list li{list-style:none;display:flex;gap:10px;align-items:center;font-size:14.5px;color:#dbe3f6;font-weight:500}
+.bo-list .f-check{background:rgba(59,130,246,.22);color:#8db4ff}
+.browser{border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);background:#fff;transform:rotate(0deg)}
+.browser-bar{display:flex;align-items:center;gap:6px;background:#eef1f7;padding:10px 14px;border-bottom:1px solid #e2e6ef}
+.browser-bar i{width:10px;height:10px;border-radius:50%;background:#d5dae5}
+.browser-bar i:first-child{background:#f87171}.browser-bar i:nth-child(2){background:#fbbf24}.browser-bar i:nth-child(3){background:#34d399}
+.browser-bar span{margin-left:10px;font-size:11.5px;color:#8b93a7;background:#fff;border-radius:6px;padding:3px 12px;border:1px solid #e2e6ef}
+@media(max-width:940px){.bo-grid{grid-template-columns:1fr}}
+
+/* ---------- Roles ---------- */
+.roles{padding:110px 0 20px}
+.roles-head{max-width:740px;margin-bottom:52px}
+.roles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.role{border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;background:#fff;box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease);position:relative}
+.role:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.role .badge{position:absolute;top:26px;right:26px;font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--blue);background:var(--tint);border-radius:var(--r-pill);padding:5px 12px}
+.role h3{font-size:19px;margin:16px 0 8px}
+.role p{font-size:14.5px;color:var(--ink-2);max-width:52ch}
+.role .p-ico{background:var(--tint);color:var(--blue)}
+@media(max-width:880px){.roles-grid{grid-template-columns:1fr}}
+
+/* ---------- Steps ---------- */
+.steps{padding:100px 0 30px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.step{padding:38px 32px;position:relative}
+.step+.step{border-left:1px solid var(--line-soft)}
+.step .num{font-size:13px;font-weight:700;color:var(--blue);background:var(--tint);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px}
+.step h3{font-size:18px;margin-bottom:8px}
+.step p{font-size:14.5px;color:var(--ink-2)}
+@media(max-width:880px){.steps-grid{grid-template-columns:1fr}.step+.step{border-left:0;border-top:1px solid var(--line-soft)}}
+
+/* ---------- Pricing ---------- */
+.pricing{padding:100px 0 20px}
+.pr-head{max-width:720px;margin-bottom:52px}
+.pr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pr-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 26px;background:var(--bg);position:relative;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.pr-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.pr-card .tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pr-card h3{font-size:19px;margin:10px 0 6px}
+.pr-card p{font-size:13.5px;color:var(--ink-2)}
+.pr-card .cond{margin-top:16px;display:inline-block;font-size:12px;font-weight:600;color:var(--blue);background:var(--tint);padding:4px 12px;border-radius:var(--r-pill)}
+.pr-note{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 26px;font-size:14px;color:var(--ink-2)}
+.pr-note span{display:flex;align-items:center;gap:8px}
+@media(max-width:940px){.pr-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.pr-grid{grid-template-columns:1fr}}
+
+/* ---------- FAQ ---------- */
+.faq{padding:100px 0 40px}
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+.faq details{border-bottom:1px solid var(--line);padding:4px 0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;font-weight:600;font-size:16px;padding:18px 0}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pl{flex:none;width:26px;height:26px;border-radius:8px;background:var(--tint);color:var(--blue);display:grid;place-items:center;transition:transform .25s var(--ease)}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .a{padding:0 40px 20px 0;color:var(--ink-2);font-size:15px}
+@media(max-width:880px){.faq-grid{grid-template-columns:1fr;gap:24px}}
+
+/* ---------- CTA ---------- */
+.cta{padding:60px 0 110px}
+.cta-panel{position:relative;border-radius:28px;background:linear-gradient(135deg,#1d4ed8,#2563eb 55%,#3b82f6);color:#fff;padding:76px 60px;overflow:hidden;box-shadow:0 30px 80px rgba(37,99,235,.35)}
+.cta-panel::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 64px,transparent 64px 128px)}
+.cta-panel::after{content:"";position:absolute;width:520px;height:520px;right:-140px;bottom:-260px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.16),transparent 70%)}
+.cta-panel h2{color:#fff;max-width:16ch;position:relative}
+.cta-panel p{position:relative;color:#dbe6ff;margin:16px 0 30px;max-width:52ch;font-size:16.5px}
+.cta-panel .btn-row{display:flex;gap:14px;flex-wrap:wrap;position:relative}
+@media(max-width:700px){.cta-panel{padding:52px 30px}}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0;color:var(--ink-3);font-size:14px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot .brand{font-size:16px}
+.foot .brand img{width:26px;height:24px}
+.foot-links{display:flex;gap:26px}
+.foot-links a:hover{color:var(--ink)}
+
+/* ---------- Reveal ---------- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .phone-a,.phone-b,.hero-chip{animation:none}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img src="/assets/logo-icon.svg" alt="HausmeisterPro Logo">HausmeisterPro</a>
+    <div class="nav-links">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#backoffice">Back Office</a>
+      <a href="#rollen">Für wen</a>
+      <a href="#preise">Preismodell</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#kontakt">Demo vereinbaren</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="rv">Sauberkeit mit <span class="hl">Foto&#8209;Nachweis</span> – in jeder Sprache.</h1>
+      <p class="sub rv" style="--d:.08s">HausmeisterPro digitalisiert die Gebäudebetreuung: Aufgaben und Turnusse planen, Erledigungen mit Live-Foto belegen und Notizen automatisch übersetzen.</p>
+      <div class="hero-ctas rv" style="--d:.16s">
+        <a class="btn btn-primary" href="#kontakt">Demo vereinbaren <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#funktionen">Funktionen ansehen</a>
+      </div>
+      <p class="hero-note rv" style="--d:.24s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        iOS &amp; Android · DSGVO-konform · Hosting in Deutschland
+      </p>
+    </div>
+    <div class="hero-visual rv" style="--d:.15s">
+      <div class="phone phone-a"><img src="/assets/app-home.png" alt="HausmeisterPro App – Tagesübersicht mit Aufgaben und Statistiken" width="390" height="843"></div>
+      <div class="phone phone-b"><img src="/assets/app-task.png" alt="HausmeisterPro App – Hauptaufgabe mit Unterpunkten und Foto-Nachweis" width="390" height="843"></div>
+      <div class="hero-chip chip-1">
+        <span class="dot" style="background:var(--green-soft);color:var(--green)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span>Treppenhaus reinigen<small>Foto-Nachweis · 08:42 Uhr</small></span>
+      </div>
+      <div class="hero-chip chip-2">
+        <span class="dot" style="background:var(--tint);color:var(--blue)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <span>Übersetzt aus Polnisch<small>Notiz automatisch übersetzt</small></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-in rv">
+      <div class="stat"><b><span>3</span> Klicks</b><small>von Aufgabe bis Nachweis</small></div>
+      <div class="stat"><b><span>5</span> Sprachen</b><small>Deutsch, Türkisch, Polnisch, Rumänisch, Englisch</small></div>
+      <div class="stat"><b><span>3</span> Rollen</b><small>Team, Objektleitung, Verwaltung</small></div>
+      <div class="stat"><b><span>100%</span></b><small>digital statt Zettelwirtschaft</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="wrap">
+    <div class="problem-head">
+      <h2 class="rv">Zettel, Zuruf, Sprachchaos – so geht Qualität verloren.</h2>
+      <p class="sub rv" style="--d:.08s">Wer viele Objekte betreut, kennt es: Niemand weiß sicher, was erledigt wurde. Beschwerden lassen sich nicht entkräften, Turnusse gehen unter.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="p-card wide rv">
+        <span class="p-ico" style="background:rgba(255,255,255,.14);color:#9db8f5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+        </span>
+        <h3>Kein Nachweis, keine Verteidigung</h3>
+        <p>Ohne Dokumentation steht bei jeder Beschwerde Aussage gegen Aussage. Hausverwaltungen wollen Belege sehen – nicht Versprechen. Mit Foto, Datum und Uhrzeit je Leistung ist die Diskussion beendet, bevor sie beginnt.</p>
+      </div>
+      <div class="p-card rv" style="--d:.08s">
+        <span class="p-ico" style="background:var(--amber-soft);color:var(--amber)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </span>
+        <h3>Turnusse gehen unter</h3>
+        <p>Wöchentliche Reinigung, monatliche Gartenpflege, Mülltermine: Auf Papier gerät der Rhythmus durcheinander – Überfälliges fällt erst auf, wenn sich jemand beschwert.</p>
+      </div>
+      <div class="p-card rv" style="--d:.16s">
+        <span class="p-ico" style="background:var(--tint);color:var(--blue)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h11v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
+        </span>
+        <h3>Sprachbarrieren im Team</h3>
+        <p>Viele Teams sind mehrsprachig. Wichtige Hinweise – ein defektes Schloss, eine volle Tonne – kommen nie oder falsch verstanden an.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="funktionen">
+  <div class="wrap">
+    <div class="f-head">
+      <span class="eyebrow rv">Die App im Einsatz</span>
+      <h2 class="rv">Vom Turnusplan bis zum Foto-Beleg. Alles in einer App.</h2>
+    </div>
+
+    <div class="f-row">
+      <div class="f-copy rv">
+        <h3>Aufgaben &amp; Turnusse, die sich selbst organisieren</h3>
+        <p>Jedes Objekt bekommt seine wiederkehrenden Aufgaben mit Unterpunkten – wöchentlich, monatlich oder bei Bedarf. Das Team sieht morgens genau, was heute, in 7 oder 30 Tagen ansteht. Überfälliges wird farbig markiert, nichts geht unter.</p>
+        <ul class="f-list">
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Tages-, Wochen- und Monatsvorschau</b> je Mitarbeiter und Objekt</span></li>
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Unterpunkte mit Fortschritt</b> – z.&nbsp;B. „EG–2. OG kehren", „Geländer abwischen"</span></li>
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Überfällig-Warnung</b> mit klarer Priorität statt böser Überraschung</span></li>
+        </ul>
+      </div>
+      <div class="f-shot rv" style="--d:.1s">
+        <div class="f-stage stage-blue">
+          <div class="phone"><img src="/assets/app-woche.png" alt="Wochenvorschau: 23 Aufgaben in 7 Tagen, nach Datum gruppiert" width="390" height="843" loading="lazy"></div>
+          <span class="f-tag" style="left:18px;top:70px;color:var(--amber)">Überfällig · 2</span>
+          <span class="f-tag" style="right:18px;bottom:60px;color:var(--green)">94 Aufgaben · 30 Tage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="f-row flip">
+      <div class="f-copy rv">
+        <h3>Foto-Nachweis in Sekunden statt Zettel</h3>
+        <p>Beim Abhaken nimmt das Team ein Live-Foto auf – direkt am Objekt, mit Datum und Uhrzeit. Der Beleg hängt automatisch an der Aufgabe und ist für Objektleitung, Hausverwaltung und auf Wunsch sogar Bewohner sichtbar.</p>
+        <ul class="f-list">
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Live-Foto je Unterpunkt</b> – keine Galerie-Uploads, keine alten Bilder</span></li>
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Offline-fähig</b> – Foto und Abhaken warten auf Sync, nichts geht verloren</span></li>
+          <li><span class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Lückenlose Historie</b> je Objekt: wer, wann, was, mit Bild</span></li>
+        </ul>
+      </div>
+      <div class="f-shot rv" style="--d:.1s">
+        <div class="f-stage stage-green">
+          <div class="phone"><img src="/assets/app-foto.png" alt="Foto-Nachweis: Ist dieses Foto als Nachweis geeignet? Foto bestätigen und abhaken" width="390" height="844" loading="lazy"></div>
+          <span class="f-tag" style="right:14px;top:64px;color:var(--green)">Aufgenommen: 23.06.2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bento">
+      <div class="b-tile b-1 rv">
+        <h3>Jede Notiz in jeder Sprache</h3>
+        <p>Das Team schreibt in der Muttersprache – HausmeisterPro übersetzt automatisch ins Deutsche und zeigt beides an. Aus „Klatka schodowa była zamknięta" wird sofort „Das Treppenhaus war abgeschlossen".</p>
+        <img class="shot" src="/assets/app-uebersetzung.png" alt="Notiz automatisch aus dem Polnischen übersetzt" loading="lazy">
+      </div>
+      <div class="b-tile b-2 rv" style="--d:.1s">
+        <h3>Zeiterfassung ohne Überwachung</h3>
+        <p>Ein- und ausstempeln mit einmaligem Standort-Abgleich – kein laufendes Tracking, kein Bewegungsprofil. Fair fürs Team, verlässlich für die Abrechnung.</p>
+        <img class="shot" src="/assets/app-zeit.png" alt="Zeiterfassung: eingestempelt seit 07:32 Uhr, Pause und Ausstempeln" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK OFFICE -->
+<section class="backoffice" id="backoffice">
+  <div class="wrap bo-grid">
+    <div>
+      <span class="eyebrow rv" style="color:#8db4ff">Back Office für die Verwaltung</span>
+      <h2 class="rv">Die Zentrale behält alles im Griff.</h2>
+      <p class="sub rv" style="--d:.08s">Objekte, Mitarbeiter, Auslastung und Turnusse – das Web-Back-Office plant und dokumentiert den gesamten Betrieb. Krankmeldung erfasst? Aufgaben werden zur Umverteilung vorgeschlagen, das Team wird per Push informiert.</p>
+      <ul class="bo-list rv" style="--d:.14s">
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Disposition &amp; Planungstabellen</li>
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Auslastung je Mitarbeiter</li>
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Zeiterfassung &amp; Krankmeldungen</li>
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mitarbeiter &amp; Slots</li>
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Objektaufnahme mit Protokoll</li>
+        <li><span class="f-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Abrechnung &amp; SEPA-Export</li>
+      </ul>
+    </div>
+    <div class="rv" style="--d:.1s">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span>backoffice.hausmeisterpro.app</span></div>
+        <img src="/assets/web-backoffice.png" alt="HausmeisterPro Back Office – Übersicht mit Objekten, Disposition und Auslastung" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="roles" id="rollen">
+  <div class="wrap">
+    <div class="roles-head">
+      <h2 class="rv">Eine Plattform, vier Perspektiven.</h2>
+      <p class="sub rv" style="--d:.08s">Jede Rolle sieht genau das, was sie braucht – vom Hausmeister vor Ort bis zum Bewohner, der wissen will, wann zuletzt gereinigt wurde.</p>
+    </div>
+    <div class="roles-grid">
+      <div class="role rv">
+        <span class="badge">App · iOS &amp; Android</span>
+        <span class="p-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></span>
+        <h3>Hausmeister &amp; Reinigungsteam</h3>
+        <p>Sieht die eigenen Aufgaben pro Objekt, hakt mit Foto ab, stempelt ein und aus, schreibt Notizen in der Muttersprache. In fünf Sprachen bedienbar.</p>
+      </div>
+      <div class="role rv" style="--d:.06s">
+        <span class="badge">App · iOS &amp; Android</span>
+        <span class="p-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg></span>
+        <h3>Objektleitung</h3>
+        <p>Legt Einmal-Aufträge und Beschwerden mit Foto direkt vor Ort an, erfasst Krankmeldungen, nimmt neue Objekte in vier Schritten auf und sieht die Auslastung des Teams.</p>
+      </div>
+      <div class="role rv" style="--d:.12s">
+        <span class="badge">Web · Back Office</span>
+        <span class="p-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+        <h3>Verwaltung &amp; Disposition</h3>
+        <p>Plant Turnusse und Mülltermine, verteilt Aufgaben bei Ausfällen um, wertet Zeiten aus und exportiert die Abrechnung – inklusive SEPA.</p>
+      </div>
+      <div class="role rv" style="--d:.18s">
+        <span class="badge">Web · Service-Portal</span>
+        <span class="p-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+        <h3>Hausverwaltung &amp; Bewohner</h3>
+        <p>Sehen im Service-Portal den Nachweis erledigter Leistungen mit Datum, Uhrzeit und Foto – und wann die nächste Reinigung geplant ist. Transparenz statt Rückfragen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps">
+  <div class="wrap">
+    <div class="steps-grid rv">
+      <div class="step">
+        <span class="num">1</span>
+        <h3>Objekte aufnehmen</h3>
+        <p>Adresse, Eckdaten, Fotos – die Objektaufnahme führt in vier Schritten durch die Begehung, gern gemeinsam mit der Hausverwaltung.</p>
+      </div>
+      <div class="step">
+        <span class="num">2</span>
+        <h3>Turnusse &amp; Team planen</h3>
+        <p>Wiederkehrende Aufgaben mit Unterpunkten, Zielzeiten und Zuständigkeiten anlegen. Mülltermine lassen sich aus Excel importieren.</p>
+      </div>
+      <div class="step">
+        <span class="num">3</span>
+        <h3>Arbeiten &amp; belegen</h3>
+        <p>Das Team arbeitet die Tagesliste ab und dokumentiert per Live-Foto. Verwaltung und Hausverwaltung sehen den Stand in Echtzeit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="preise">
+  <div class="wrap">
+    <div class="pr-head">
+      <span class="eyebrow rv">Preismodell</span>
+      <h2 class="rv">Modular. Wächst mit Ihren Objekten.</h2>
+      <p class="sub rv" style="--d:.08s">Statt starrer Pakete zahlen Sie genau für das, was Sie betreuen – vom einzelnen Standort bis zum Multi-Standort-Betrieb.</p>
+    </div>
+    <div class="pr-grid">
+      <div class="pr-card rv"><span class="tag">Schritt 1 · Setup</span><h3>Einrichtung</h3><p>Einmalig pro Standort: Objekte, Aufgabenstruktur und Team gemeinsam aufsetzen.</p><span class="cond">Einmalig</span></div>
+      <div class="pr-card rv" style="--d:.06s"><span class="tag">Schritt 2 · Basis</span><h3>Basis-Lizenz</h3><p>Back Office, Apps und Service-Portal für Ihren Betrieb – alle Kernfunktionen inklusive.</p><span class="cond">Monatlich kündbar</span></div>
+      <div class="pr-card rv" style="--d:.12s"><span class="tag">Schritt 3 · Objekte</span><h3>Pro Objekt</h3><p>Jedes betreute Objekt wird einzeln lizenziert – fair skalierend statt Pauschale.</p><span class="cond">Je Objekt</span></div>
+      <div class="pr-card rv" style="--d:.18s"><span class="tag">Schritt 4 · Wachstum</span><h3>Pro Standort</h3><p>Weitere Niederlassungen und Teams kommen als eigene Standorte dazu.</p><span class="cond">Skalierbar</span></div>
+    </div>
+    <div class="pr-note rv">
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Aufgaben- &amp; Turnusplanung</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Foto-Nachweis &amp; Doku</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reporting &amp; Auswertungen</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Abrechnung &amp; SEPA-Export</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Offene API</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap faq-grid">
+    <div>
+      <h2 class="rv">Häufige Fragen</h2>
+      <p class="sub rv" style="--d:.08s">Alles Weitere klären wir gern in einer persönlichen Demo.</p>
+    </div>
+    <div class="rv" style="--d:.1s">
+      <details open>
+        <summary>Funktioniert die App auch ohne Internet?<span class="pl">+</span></summary>
+        <p class="a">Ja. Abhaken und Foto-Nachweis funktionieren offline – die Einträge warten auf Synchronisation und werden automatisch übertragen, sobald wieder Verbindung besteht. Im Keller oder in der Tiefgarage geht nichts verloren.</p>
+      </details>
+      <details>
+        <summary>Wie funktioniert die Übersetzung von Notizen?<span class="pl">+</span></summary>
+        <p class="a">Mitarbeiter schreiben in ihrer Muttersprache. Die Notiz wird automatisch ins Deutsche übersetzt, das Original bleibt erhalten – beides ist jederzeit einsehbar. Die App selbst ist in Deutsch, Türkisch, Polnisch, Rumänisch und Englisch bedienbar.</p>
+      </details>
+      <details>
+        <summary>Wird der Standort der Mitarbeiter getrackt?<span class="pl">+</span></summary>
+        <p class="a">Nein. Beim Ein- und Ausstempeln prüft die App einmalig den Standort – es gibt kein laufendes Tracking und kein Bewegungsprofil. Ohne Standort-Freigabe kann trotzdem gestempelt werden; das wird entsprechend vermerkt.</p>
+      </details>
+      <details>
+        <summary>Wo liegen die Daten?<span class="pl">+</span></summary>
+        <p class="a">Auf Servern in Deutschland (Hetzner Cloud). Die Verarbeitung erfolgt DSGVO-konform; der Zugang zur App ist ausschließlich per persönlicher Einladung durch Ihre Verwaltung möglich.</p>
+      </details>
+      <details>
+        <summary>Was sehen Hausverwaltung und Bewohner?<span class="pl">+</span></summary>
+        <p class="a">Nur das, was Sie freigeben: erledigte Leistungen mit Datum, Uhrzeit und Foto-Nachweis sowie geplante Termine des jeweiligen Objekts. Die Freigabe steuern Sie pro Objekt im Back Office.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="kontakt">
+  <div class="wrap">
+    <div class="cta-panel rv">
+      <h2>Bereit für Sauberkeit mit System?</h2>
+      <p>Sehen Sie in 30 Minuten, wie HausmeisterPro Ihre Objekte, Ihr Team und Ihre Nachweise digitalisiert – mit Ihren echten Abläufen, nicht mit Folien.</p>
+      <div class="btn-row">
+        <a class="btn btn-white" href="mailto:arthur.grabowski@nxtyou.de?subject=Demo%20HausmeisterPro">Demo vereinbaren <span class="arr">→</span></a>
+        <a class="btn" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3)" href="#funktionen">Nochmal die Funktionen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><img src="/assets/logo-icon.svg" alt="">HausmeisterPro</a>
+    <div class="foot-links">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#preise">Preismodell</a>
+      <a href="mailto:arthur.grabowski@nxtyou.de">Kontakt</a>
+    </div>
+    <span>©2026 NXT YOU GmbH · Made in Germany</span>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
